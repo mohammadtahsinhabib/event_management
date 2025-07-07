@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Event Manager{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+  
+</head>
+<body class="bg-orange-200">
+
+  <!-- Nav Bar -->
+  <nav class="bg-gray-800 text-white p-4">
+    <div class="container flex justify-between mx-auto">
+      <a href="{% url 'organizer-dashboard' %}" class="font-bold text-xl hover:text-blue-300">Event Manager</a>
+      <div class="space-x-5 mr-5">
+        <a href="{% url 'event-list' %}" class=" hover:text-blue-300">Events</a>
+        <a href="{% url 'category-list' %}" class=" hover:text-blue-300">Categories</a>
+        <a href="{% url 'participant-list' %}" class="hover:text-blue-300">Participants</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mx-auto p-6">
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

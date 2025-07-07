@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <div>
+    <form method="POST" class="w-1/2 mx-auto mt-4 space-y-3">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="bg-amber-800 px-4 py-2 text-white rounded-md"> Submit </button>
+    </form>
+  </div>
+{% endblock %}

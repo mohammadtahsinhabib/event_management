@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Event Details{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-bold mb-6 text-gray-800">{{ event.name }}</h1>
+
+<ul class="space-y-2 text-wrap ">
+  <li><strong> Category: </strong> {{ event.category.name }}</li>
+  <li><strong> Date: </strong> {{ event.date }}</li>
+  <li><strong> Time: </strong> {{ event.time }}</li>
+  <li><strong> Location: </strong> {{ event.location }}</li>
+  <li><strong> Description: </strong> {{ event.description }}</li>
+  <li><strong> Total Participant: </strong> {{ event.participant_set.count }}</li>
+  <li><strong> Participants: </strong>
+  <ul class="px-2 gap-y-2 text-emerald-900 font-semibold">
+    {% for participant in event.participant_set.all %}
+      <li>{{ participant.name }}</li>
+    {% endfor %}
+  </ul>
+</li>
+
+</ul>
+
+{% endblock %}

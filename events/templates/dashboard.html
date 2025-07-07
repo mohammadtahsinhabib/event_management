@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Organizer Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="text-3xl font-semibold mb-6">Organizer Dashboard</h1>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+  <div class="bg-white rounded-md shadow p-6 text-center hover:bg-blue-100">
+    <p class="text-gray-500 ">Total Participants</p>
+    <p class="text-3xl font-bold">{{ total_participants }}</p>
+  </div>
+
+  <a href="?filter=total" class="bg-white rounded-md shadow p-6 text-center hover:bg-blue-100">
+    <p class="text-gray-500">Total Events</p>
+    <p class="text-3xl font-bold">{{ total_events }}</p>
+  </a>
+
+  <a href="?filter=upcoming" class="bg-white rounded-md shadow p-6 text-center hover:bg-blue-100 ">
+    <p class="text-gray-500">Upcoming Events</p>
+    <p class="text-3xl font-bold">{{ upcoming_events }}</p>
+  </a>
+
+  <a href="?filter=past" class="bg-white rounded-md shadow p-6 text-center hover:bg-blue-100 ">
+    <p class="text-gray-500">Past Events</p>
+    <p class="text-3xl font-bold">{{ past_events }}</p>
+  </a>
+</div>
+
+
+<div class="bg-white rounded-md shadow p-6">
+  <h2 class="text-2xl font-semibold mb-6">{{ title }}</h2>
+  <ul class="">
+    {% if events %}
+      {% for event in events %}
+        <li class="py-3 flex justify-between border-b-2 border-rose-200">
+          <span>{{ event.name }}</span>
+          <span class="text-gray-500">
+            {% if event.date %}{{ event.date }} {% endif %}
+            {{ event.time }}
+          </span>
+        </li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}
