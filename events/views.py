@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Event, Category, Participant
-from .forms import EventForm, CategoryForm, ParticipantForm
-from django.utils import timezone
-from .models import Event, Participant
+from events.models import Event, Category, Participant
+from events.forms import EventForm, CategoryForm, ParticipantForm
 from django.db.models import Q , Count
 from django.contrib import messages
 from datetime import date
