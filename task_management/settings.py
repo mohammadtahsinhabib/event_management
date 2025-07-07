@@ -25,7 +25,8 @@ SECRET_KEY = "django-insecure-(%9ffrw522ewso338^@hs0sr@gvnsy*&m5i&ycf3z2%q0515^(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGIN = ["https://*.onrender.com","https://127.0.0.1:8000"]
 
 
 # Application definition
@@ -88,15 +89,24 @@ WSGI_APPLICATION = "task_management.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'event_management',
+#         'USER': 'postgres',
+#         'PASSWORD': '39039820',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
+
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'event_management',
-        'USER': 'postgres',
-        'PASSWORD': '39039820',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
+    'default': dj_database_url.config(
+        default='postgresql://event_management_db_32q9_user:BHXU5op5EUzWmjXKR0jsT5dipekMSfHD@dpg-d1lq9vp5pdvs73ca32a0-a.oregon-postgres.render.com/event_management_db_32q9',
+        conn_max_age=600
+    )
 }
 
 # Password validation
