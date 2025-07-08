@@ -3,6 +3,7 @@ from events.views import *
 
 urlpatterns = [
     path("dashboard/", organizer_dashboard, name="organizer-dashboard"),
+    path("", organizer_dashboard, name="organizer-dashboard"),
 
     path("categories/", category_list, name="category-list"),
     path("categories/create/", category_create, name="category-create"),
