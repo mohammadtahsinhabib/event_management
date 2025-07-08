@@ -10,6 +10,7 @@ class StyleMixins:
     )
 
     def apply_styled_widgets(self):
+
         for field_name, field in self.fields.items():
             field.widget.attrs.update({
                 'class': self.default_classes,
