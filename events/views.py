@@ -11,12 +11,9 @@ def organizer_dashboard(request):
 
     total_participants = Participant.objects.count()
     total_events = base_query.count()
-    upcoming_events = base_query.filter(date__gte=date.today()).count()
+    upcoming_events = base_query.filter(date__gt =date.today()).count()
     past_events = base_query.filter(date__lt=date.today()).count()
-
-
-
-
+    
     filter = request.GET.get("filter")
     
     if filter == "upcoming":

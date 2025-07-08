@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
-
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -60,7 +60,7 @@ INTERNAL_IPS = [
     # ...
 ]
 
-ROOT_URLCONF = "task_management.urls"
+ROOT_URLCONF = "event_management.urls"
 
 TEMPLATES = [
     {
@@ -77,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "task_management.wsgi.application"
+WSGI_APPLICATION = "event_management.wsgi.application"
 
 
 # Database
@@ -100,7 +100,7 @@ WSGI_APPLICATION = "task_management.wsgi.application"
 #     }
 # }
 
-import dj_database_url
+
 
 DATABASES = {
     'default': dj_database_url.config(
