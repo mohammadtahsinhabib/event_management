@@ -89,6 +89,7 @@ WSGI_APPLICATION = "event_management.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -99,7 +100,6 @@ WSGI_APPLICATION = "event_management.wsgi.application"
 #         'PORT': '5432'
 #     }
 # }
-
 
 
 DATABASES = {
