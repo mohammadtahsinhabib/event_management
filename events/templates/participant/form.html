@@ -1,7 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base_.html' %}
 {% load static %}
 {% block content %}
-  <div>
+    <div>
         <form action="" method="POST" class="w-1/2 mx-auto space-y-5">
             {% csrf_token %}
             {{ form.as_p }}

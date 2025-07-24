@@ -1,12 +1,28 @@
-{% extends 'base.html' %}
+{% extends 'base_.html' %}
 {% load static %}
-
 {% block content %}
-  <div>
-    <form method="POST" class="w-1/2 mx-auto mt-4 space-y-3">
+  <section class="max-w-3xl mx-auto py-12">
+    {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+        {{ error }}
+      {% endfor %}
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="bg-amber-800 px-4 py-2 text-white rounded-md"> Submit </button>
+      {% for field in form %}
+
+        <div class="mb-4">
+          <label class="block font-medium mb-1">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            {% for error in field.errors %}
+              <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+      {% endfor %}
+      <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Save</button>
     </form>
-  </div>
+  </section>
 {% endblock %}

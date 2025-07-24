@@ -1,0 +1,5 @@
+Error: Maximum line length exceeded in core\templates\no_permission.html
+Error: 'charmap' codec can't decode byte 0x8f in position 455: character maps to <undefined>
+0 templates have been reindented.
+197 templates were already perfect!
+2 templates could not be processed due to an error.

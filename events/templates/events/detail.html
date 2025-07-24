@@ -1,24 +1,26 @@
-{% extends 'base.html' %}
-{% block title %}Event Details{% endblock %}
-
+{% extends 'base_.html' %}
 {% block content %}
-<h1 class="text-3xl font-bold mb-6 text-gray-800">{{ event.name }}</h1>
+<section class="max-w-4xl mx-auto py-12 ">
+  <img src="{{ event.image.url | default:'/media/default.jpg' }}" class="w-full h-50 rounded-lg mb-3" alt="Event image">
 
-<ul class="space-y-2 text-wrap ">
-  <li><strong> Category: </strong> {{ event.category.name }}</li>
-  <li><strong> Date: </strong> {{ event.date }}</li>
-  <li><strong> Time: </strong> {{ event.time }}</li>
-  <li><strong> Location: </strong> {{ event.location }}</li>
-  <li><strong> Description: </strong> {{ event.description }}</li>
-  <li><strong> Total Participant: </strong> {{ event.participant_set.count }}</li>
-  <li><strong> Participants: </strong>
-  <ul class="px-2 gap-y-2 text-emerald-900 font-semibold">
-    {% for participant in event.participant_set.all %}
-      <li>{{ participant.name }}</li>
-    {% endfor %}
-  </ul>
-</li>
+  <h2 class="text-3xl font-bold">{{ event.name }}</h2>
+  <p class="text-gray-700 mt-2 font-semibold">{{ event.description }}</p>
+  <p class="mt-4 text-base italic text-gray-600">
+    📅 Date: {{ event.date }} &nbsp; ⏰ Time: {{ event.time }}<br>
+    📍 Location: {{ event.location }}
+  </p>
 
-</ul>
-
+  {% if request.user.is_authenticated and 'Participant' in user_groups %}
+    {% if rsvped %}
+      <p class="mt-6 text-green-600 font-semibold"> &#10003 You've already RSVP'd to this event.</p>
+    {% else %}
+      <form method="POST" action="{% url 'rsvp-event' event.id %}" class="mt-6">
+        {% csrf_token %}
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          RSVP
+        </button>
+      </form>
+    {% endif %}
+  {% endif %}
+</section>
 {% endblock %}

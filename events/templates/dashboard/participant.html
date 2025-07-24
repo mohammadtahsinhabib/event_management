@@ -1,0 +1,21 @@
+{% extends 'base_.html' %}
+{% block content %}
+  <section class="max-w-4xl mx-auto py-10">
+    <h2 class="text-2xl font-bold mb-4">RSVP’d Events</h2>
+
+    {% if user.rsvped_events.all %}
+      <ul class="space-y-2">
+        {% for event in user.rsvped_events.all %}
+          <li class="p-4 bg-amber-100 rounded-lg shadow">
+            <strong>{{ event.name }}</strong><br>
+            {{ event.date }} at {{ event.time }} — {{ event.location }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="text-gray-700"> &#10003 You haven't RSVP'd to any events yet.</p>
+    {% endif %}
+
+  </ul>
+  </section>
+{% endblock %}

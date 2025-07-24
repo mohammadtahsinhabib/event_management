@@ -1,55 +1,55 @@
-
-{% extends 'base.html' %}
+{% comment %} 
+{% extends 'base_.html' %}
 {% block title %}Participants{% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-semibold mb-6">Participants</h1>
+  <h1 class="text-3xl font-semibold mb-6">Participants</h1>
 
-<form action="{% url 'participant-create' %} "  method="POST" >
-  {% csrf_token %}
-  <button type="submit" class="inline-block mb-4 rounded bg-green-600 text-white px-4 py-2 hover:bg-green-700 ">
-    Add New Participant
-  </button>
-</form>
-
-
-
-<table class="min-w-full bg-white shadow rounded overflow-hidden">
-  <thead class="bg-red-500 text-white">
-    <tr>
-      <th class="px-6 py-3 text-left">Name</th>
-      <th class="px-6 py-3 text-left">Email</th>
-      <th class="px-6 py-3 text-left">Events</th>
-      <th class="px-6 py-3 text-left">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for participant in participants %}
-    <tr class="border-b-2 border-rose-200 hover:bg-cyan-50">
-      <td class="px-6 py-4">{{ participant.name }}</td>
-      <td class="px-6 py-4">{{ participant.email }}</td>
-      <td class="px-6 py-4">
-        <div class="flex-col">
-        {% for event in participant.events.all %}
-          <div class=" bg-slate-300 text-gray-600 rounded px-2 py-1 text-sm mb-1 ">{{ event.name }}</div>
-        {% endfor %}
-        </div>
-      </td>
-      
-      
-    <td class="px-6 py-4">
-  <div class="flex items-center space-x-2 mr-2">
-    <a href="{% url 'participant-update' participant.id %}" class="text-yellow-500 hover:text-yellow-700">Edit</a>
-    <form action="{% url 'participant-delete' participant.id %}" method="POST" >
-      {% csrf_token %}
-      <button type="submit" class="text-red-600 hover:text-red-800">
-        Delete
+  <form action="{% url 'participant-create' %} "  method="POST" >
+    {% csrf_token %}
+    <button type="submit" class="inline-block mb-4 rounded bg-green-600 text-white px-4 py-2 hover:bg-green-700 ">
+      Add New Participant
     </button>
-    </form>
-  </div>
-</td>
+  </form>
+
+
+
+  <table class="min-w-full bg-white shadow rounded overflow-hidden">
+    <thead class="bg-red-500 text-white">
+      <tr>
+        <th class="px-6 py-3 text-left">Name</th>
+        <th class="px-6 py-3 text-left">Email</th>
+        <th class="px-6 py-3 text-left">Events</th>
+        <th class="px-6 py-3 text-left">Actions</th>
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
-{% endblock %}
+    </thead>
+    <tbody>
+      {% for participant in participants %}
+        <tr class="border-b-2 border-rose-200 hover:bg-cyan-50">
+          <td class="px-6 py-4">{{ participant.name }}</td>
+          <td class="px-6 py-4">{{ participant.email }}</td>
+          <td class="px-6 py-4">
+            <div class="flex-col">
+              {% for event in participant.events.all %}
+                <div class=" bg-slate-300 text-gray-600 rounded px-2 py-1 text-sm mb-1 ">{{ event.name }}</div>
+              {% endfor %}
+            </div>
+          </td>
+
+
+          <td class="px-6 py-4">
+            <div class="flex items-center space-x-2 mr-2">
+              <a href="{% url 'participant-update' participant.id %}" class="text-yellow-500 hover:text-yellow-700">Edit</a>
+              <form action="{% url 'participant-delete' participant.id %}" method="POST" >
+                {% csrf_token %}
+                <button type="submit" class="text-red-600 hover:text-red-800">
+                  Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %} {% endcomment %}

@@ -1,0 +1,137 @@
+{% extends 'base_.html' %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+  <section class="max-w-7xl mx-auto py-12 px-4">
+    <h2 class="text-3xl font-bold mb-10 text-blue-600">Admin Dashboard</h2>
+
+  <!-- Stats Grid -->
+    <div class="grid md:grid-cols-3 gap-6 mb-12">
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-lg font-semibold text-gray-600">Total Users</h3>
+        <p class="text-2xl font-bold text-blue-600">{{ users.count }}</p>
+      </div>
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-lg font-semibold text-gray-600">Total Events</h3>
+        <p class="text-2xl font-bold text-red-600">{{ events.count }}</p>
+      </div>
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-lg font-semibold text-gray-600">Total Groups</h3>
+        <p class="text-2xl font-bold text-green-600">{{ groups.count }}</p>
+      </div>
+    </div>
+
+
+    <!-- Error messages -->
+    {% if messages %}
+      {% for message in messages %}
+        <div
+          class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modalTitle"
+        >
+          <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
+            <div class="flex items-start justify-between">
+              <button
+                type="button"
+                class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                aria-label="Close"
+                onclick="this.closest('.fixed').remove()"
+
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="size-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div class="mt-4">
+              <p class="text-pretty text-gray-700 dark:text-gray-200">
+                {{message}}
+              </p>
+            </div>
+          </div>
+        </div>
+
+      {% endfor %}
+    {% endif %}
+
+    <h3 class="text-2xl font-bold mb-4 text-gray-800">Manage Users</h3>
+    <div id = 'manage-users' class="mb-12">
+      <table class="min-w-full bg-white shadow rounded overflow-hidden">
+        <thead class="bg-red-500 text-white">
+          <tr>
+            <th class="px-6 py-3 text-left">Username</th>
+            <th class="px-6 py-3 text-left">Email</th>
+            <th class="px-6 py-3 text-left">Groups</th>
+            <th class="px-6 py-3 text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr class="border-b-2 border-rose-200 hover:bg-gray-100">
+              <td class="px-6 py-4">{{ user.username }}</td>
+              <td class="px-6 py-4">{{ user.email }}</td>
+              <td class="px-6 py-4">
+                {% for group in user.groups.all %}
+                  <span class="bg-gray-200 text-sm px-2 py-1 rounded mr-1">{{ group.name }}</span>
+                {% endfor %}
+              </td>
+              <td class="px-6 py-4 space-x-4">
+                <a href="{% url 'change-role' user.id %}" class="text-yellow-600 hover:underline">Change Role</a>
+                {% if not user.is_superuser %}
+                  <a href="{% url 'delete-user' user.id %}" class="text-red-600 hover:underline">Delete</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="text-2xl font-bold mb-4 text-gray-800">Manage Groups</h3>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <ul class="bg-white shadow rounded p-4">
+          {% for group in groups %}
+            <li class="flex justify-between items-center border-b py-2">
+              <span class="text-gray-700">{{ group.name }}</span>
+              <form action="{% url 'delete-group' group.id %}" method="POST">
+                {% csrf_token %}
+                <button class="text-red-600 hover:underline text-sm" type="submit">Delete</button>
+              </form>
+            </li>
+          {% empty %}
+            <li class="text-gray-500">No groups available.</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+
+      <div class="bg-white shadow rounded p-4">
+        <form action="{% url 'create-group' %}" method="POST">
+          {% csrf_token %}
+          <label class="block mb-2 font-semibold text-gray-700">New Group Name</label>
+          <input type="text" name="name" required
+                 class="border border-gray-300 w-full p-3 rounded shadow-sm mb-4 focus:outline-none focus:ring-rose-500" />
+          <button type="submit"
+                  class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition">
+            Create Group
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endblock %}

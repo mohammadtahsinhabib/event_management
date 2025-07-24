@@ -1,44 +1,88 @@
-
-{% extends 'base.html' %}
+{% comment %} 
+{% extends 'base_.html' %}
 {% block title %}Categories{% endblock %}
 
 {% block content %}
-<h1 class="text-3xl font-semibold mb-6">Categories</h1>
-<form action="{% url 'category-create' %}" >
-  {% csrf_token %}
-  <button type="submit" class="inline-block mb-4 rounded bg-green-600 text-white px-4 py-2 hover:bg-green-700 ">
-    Add New Category
-  </button>
-</form>
-
-
-<table class="min-w-full bg-red-50  rounded-xl overflow-hidden">
-  <thead class="bg-red-500 text-white">
-    <tr>
-      <th class="px-6 py-3 text-left">Name</th>
-      <th class="px-6 py-3 text-left">Description</th>
-      <th class="px-6 py-3 text-left">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for category in categories %}
-    <tr class="border-b-2 border-rose-200 hover:bg-gray-200">
-      <td class="px-6 py-4">{{ category.name }}</td>
-      <td class="px-6 py-4">{{ category.description|truncatechars:50 }}</td>
- 
-      <td class="px-6 py-4 space-x-2">
-        <a href="{% url 'category-update' category.id %}" class="text-yellow-500 hover:text-yellow-700">Edit</a>
-        <form action="{% url 'category-delete' category.id %}" method="POST" style="display:inline;">
+  <h1 class="text-3xl font-semibold mb-6">Categories</h1>
+  <form action="{% url 'category-create' %}" >
     {% csrf_token %}
-    <button type="submit" class="text-red-600 hover:text-red-800">
-        Delete
+    <button type="submit" class="inline-block mb-4 rounded bg-green-600 text-white px-4 py-2 hover:bg-green-700 ">
+      Add New Category
     </button>
-</form>
+  </form>
+{% if messages %}
+  {% for message in messages %}
+    <div
+      class="fixed inset-0 z-50 grid place-content-center bg-black/50 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+      <div class="w-full max-w-md rounded-lg bg-white p-6 shadow-lg dark:bg-gray-900">
+        <div class="flex items-start justify-between">
+          <button
+            type="button"
+            class="-me-4 -mt-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-50 hover:text-gray-600 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+            aria-label="Close"
+            onclick="this.closest('.fixed').remove()"
 
-      </td>
-    </tr>
-    
-    {% endfor %}
-  </tbody>
-</table>
-{% endblock %}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="size-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="mt-4">
+          <p class="text-pretty text-gray-700 dark:text-gray-200">
+            {{message}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+  {% endfor %}
+{% endif %}
+
+
+  <table class="min-w-full bg-red-50  rounded-xl overflow-hidden">
+    <thead class="bg-red-500 text-white">
+      <tr>
+        <th class="px-6 py-3 text-left">Name</th>
+        <th class="px-6 py-3 text-left">Description</th>
+        <th class="px-6 py-3 text-left">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category in categories %}
+        <tr class="border-b-2 border-rose-200 hover:bg-gray-200">
+          <td class="px-6 py-4">{{ category.name }}</td>
+          <td class="px-6 py-4">{{ category.description|truncatechars:50 }}</td>
+
+          <td class="px-6 py-4 space-x-2">
+            <a href="{% url 'category-update' category.id %}" class="text-yellow-500 hover:text-yellow-700">Edit</a>
+            <form action="{% url 'category-delete' category.id %}" method="POST" style="display:inline;">
+              {% csrf_token %}
+              <button type="submit" class="text-red-600 hover:text-red-800">
+                Delete
+              </button>
+            </form>
+
+          </td>
+        </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %} {% endcomment %}

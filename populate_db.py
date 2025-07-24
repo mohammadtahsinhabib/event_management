@@ -6,7 +6,7 @@ import random
 from faker import Faker
 
 # Setup Django environment
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'task_management.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "task_management.settings")
 django.setup()
 
 from events.models import Category, Event, Participant
@@ -22,15 +22,14 @@ Participant.objects.all().delete()
 categories = []
 for _ in range(50):
     cat = Category.objects.create(
-        name=fake.unique.word().capitalize(),
-        description=fake.sentence()
+        name=fake.unique.word().capitalize(), description=fake.sentence()
     )
     categories.append(cat)
 
 # Create 200 Events
 events = []
 for _ in range(200):
-    date = fake.date_between(start_date='-30d', end_date='+30d')
+    date = fake.date_between(start_date="-30d", end_date="+30d")
     time = fake.time()
     event = Event.objects.create(
         name=fake.catch_phrase(),
@@ -38,16 +37,17 @@ for _ in range(200):
         date=date,
         time=time,
         location=fake.city(),
-        category=random.choice(categories)
+        category=random.choice(categories),
     )
     events.append(event)
 
 # Create 600 Participants
 for _ in range(600):
     participant = Participant.objects.create(
-        name=fake.name(),
-        email=fake.unique.email()
+        name=fake.name(), email=fake.unique.email()
     )
     participant.events.set(random.sample(events, k=random.randint(1, 8)))
 
-print("✅ Database populated successfully with 50 categories, 200 events, and 600 participants!")
+print(
+    "✅ Database populated successfully with 50 categories, 200 events, and 600 participants!"
+)

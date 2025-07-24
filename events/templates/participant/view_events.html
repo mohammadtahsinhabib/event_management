@@ -1,0 +1,36 @@
+{% extends 'base_.html' %}
+{% load static %}
+{% block content %}
+  <section class="container mx-auto py-12 px-4">
+    <h2 class="text-3xl font-bold text-gray-800 mb-8">All Event</h2>
+
+    <div class="mb-8">
+      <div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+        <h3 class="text-2xl font-semibold text-blue-700">
+          <span>{{ request.user.first_name|default:request.user.username|title }}</span>'s Events
+        </h3>
+      </div>
+    </div>
+
+    {% if events %}
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for event in events %}
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl">
+            <img src="{{ event.image.url|default:'/media/default.jpg' }}" alt="{{ event.name }}" class="w-full h-48 object-cover">
+            <div class="p-5">
+              <h3 class="text-xl font-semibold text-gray-800">{{ event.name }}</h3>
+              <p class="text-sm text-gray-500">{{ event.date }} | {{ event.location }}</p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <a href="{% url 'event-detail' event.id %}" class="bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200 text-sm">View</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="text-gray-500">No events available.</p>
+    {% endif %}
+  </div>
+
+  </section>
+{% endblock %}
