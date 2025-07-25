@@ -6,11 +6,9 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+SECRET_KEY = config("SECRET_KEY")
+# SECRET_KEY = "django-insecure-(%9ffrw522ewso338^@hs0sr@gvnsy*&m5i&ycf3z2%q0515^("
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-(%9ffrw522ewso338^@hs0sr@gvnsy*&m5i&ycf3z2%q0515^("
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -68,35 +66,24 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "event_management.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
 # DATABASES = {
 #     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": config("DB_NAME", default=""),
+#         "USER": config("DB_USER", default=""),
+#         "PASSWORD": config("DB_PASSWORD", default=""),
+#         "HOST": config("DB_HOST", default="localhost"),
+#         "PORT": config("DB_PORT", cast=int),
 #     }
 # }
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DB_NAME", default=""),
-        "USER": config("DB_USER", default=""),
-        "PASSWORD": config("DB_PASSWORD", default=""),
-        "HOST": config("DB_HOST", default="localhost"),
-        "PORT": config("DB_PORT", cast=int),
-    }
+    "default": dj_database_url.config(
+        default="postgresql://event_management_db_32q9_user:BHXU5op5EUzWmjXKR0jsT5dipekMSfHD@dpg-d1lq9vp5pdvs73ca32a0-a.oregon-postgres.render.com/event_management_db_32q9",
+        conn_max_age=600,
+    )
 }
-
-
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default='postgresql://event_management_db_32q9_user:BHXU5op5EUzWmjXKR0jsT5dipekMSfHD@dpg-d1lq9vp5pdvs73ca32a0-a.oregon-postgres.render.com/event_management_db_32q9',
-#         conn_max_age=600
-#     )
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -120,6 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
+
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -142,8 +130,8 @@ STATICFILES_DIRS = [BASE_DIR / "static/"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_HOST = config("EMAIL_HOST")
 EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
 EMAIL_PORT = config("EMAIL_PORT")
